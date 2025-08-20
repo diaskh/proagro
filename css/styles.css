@@ -1,5 +1,5 @@
 :root {
-    --primary-green: #497e04;
+    --primary-green: #287700;
     --secondary-green: #347C2C;
     --button-green: #95C11F;
     --highlight-yellow: #DFEB38;
@@ -142,7 +142,13 @@ header a:hover {
 /* About Service Section */
 #about_service {
     background: var(--background-light);
-    padding: 1rem 1.6rem;
+}
+
+@media (max-width: 768px) {
+    #about_service {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }
 
 #about_service h2 {
@@ -205,14 +211,12 @@ header a:hover {
 /* Fix for mobile video overflow */
 @media (max-width: 768px) {
     #promotion {
-        padding-left: 1rem;
-        padding-right: 1rem;
         box-sizing: border-box;
     }
     
     #promotion .section-container {
-        padding-left: 0;
-        padding-right: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
         box-sizing: border-box;
     }
     
@@ -301,11 +305,11 @@ header a:hover {
 }
 
 .pricing-category.active .pricing-category-content {
-    max-height: 1000px;
+    max-height: 2000px;
 }
 
 .pricing-items {
-    padding: 0;
+    padding: 0 0 1.5rem 0;
 }
 
 .pricing-item {
@@ -365,17 +369,19 @@ header a:hover {
     
     .pricing-item {
         padding: 1rem;
-        flex-direction: column;
+        flex-direction: row;
         align-items: flex-start;
+        min-height: auto;
     }
     
     .pricing-item-name {
-        margin-bottom: 0.5rem;
-        margin-right: 0;
+        margin-right: 1rem;
+        line-height: 1.5;
+        word-wrap: break-word;
     }
     
     .pricing-item-price {
-        align-self: flex-end;
+        flex-shrink: 0;
     }
 }
 
@@ -388,6 +394,25 @@ header a:hover {
 #promotion .section-container {
     box-sizing: border-box;
     overflow: hidden;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+    #promotion .section-container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    #promotion .section-container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
 }
 
 

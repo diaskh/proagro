@@ -584,7 +584,6 @@
 
     // Инициализация всех модулей
     document.addEventListener('DOMContentLoaded', () => {
-        ContentProtection.init();
         ScrollHandler.init();
         ModalHandler.init();
         AnimationHandler.init();
