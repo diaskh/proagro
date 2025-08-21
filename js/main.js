@@ -1,45 +1,108 @@
 (function () {
     // Модуль: Защита контента
-    // const ContentProtection = (function () {
-    //     // Используем CSS для запрета выделения вместо JS, чтобы не мешать доступности
-    //     const style = document.createElement('style');
-    //     style.textContent = `
-    //         .no-select { user-select: none; }
-    //         /* Предупреждение при попытке копирования */
-    //         .copy-warning::after {
-    //             content: 'Копирование ограничено. Свяжитесь с нами для получения информации.';
-    //             position: fixed;
-    //             top: 10px; right: 10px;
-    //             background: #f44336; color: white;
-    //             padding: 10px;
-    //             border-radius: 5px;
-    //             display: none;
-    //             z-index: 1000;
-    //         }
-    //         .copy-warning.show::after { display: block; }
-    //     `;
-    //     document.head.appendChild(style);
+    const ContentProtection = (function () {
+        // Используем CSS для запрета выделения вместо JS, чтобы не мешать доступности
+        const style = document.createElement('style');
+        style.textContent = `
+            .no-select { user-select: none; }
+            /* Предупреждение при попытке копирования */
+            .copy-warning::after {
+                content: 'Копирование ограничено. Свяжитесь с нами для получения информации.';
+                position: fixed;
+                top: 10px; right: 10px;
+                background: #f44336; color: white;
+                padding: 10px;
+                border-radius: 5px;
+                display: none;
+                z-index: 1000;
+            }
+            .copy-warning.show::after { display: block; }
+        `;
+        document.head.appendChild(style);
 
-    //     function init() {
-    //         // Запрет контекстного меню
-    //         document.addEventListener('contextmenu', e => {
-    //             e.preventDefault();
-    //             alert('Контекстное меню отключено!');
-    //         });
+        function init() {
+            // Запрет контекстного меню
+            document.addEventListener('contextmenu', e => {
+                e.preventDefault();
+                alert('Контекстное меню отключено!');
+            });
 
-    //         // Предупреждение при копировании
-    //         document.addEventListener('copy', e => {
-    //             e.preventDefault();
-    //             document.body.classList.add('copy-warning');
-    //             setTimeout(() => document.body.classList.remove('copy-warning'), 2000);
-    //         });
+            // Предупреждение при копировании
+            document.addEventListener('copy', e => {
+                e.preventDefault();
+                document.body.classList.add('copy-warning');
+                setTimeout(() => document.body.classList.remove('copy-warning'), 2000);
+            });
 
-    //         // Применяем CSS-класс для запрета выделения только к контенту
-    //         document.querySelectorAll('.protected-content').forEach(el => el.classList.add('no-select'));
-    //     }
+            // Применяем CSS-класс для запрета выделения только к контенту
+            document.querySelectorAll('.protected-content').forEach(el => el.classList.add('no-select'));
+        }
 
-    //     return { init };
-    // })();
+        return { init };
+    })();
+
+    // Модуль: Навигация
+    const NavigationHandler = (function () {
+        function initMobileMenu() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'true');
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Close mobile menu when clicking on nav links
+                document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    });
+                });
+
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        }
+
+        function initSmoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', e => {
+                    e.preventDefault();
+                    const target = document.querySelector(anchor.getAttribute('href'));
+                    if (target) {
+                        // Account for fixed header height
+                        const headerHeight = document.getElementById('header').offsetHeight;
+                        const targetPosition = target.offsetTop - headerHeight - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        history.pushState(null, null, anchor.getAttribute('href'));
+                    }
+                });
+            });
+        }
+
+        return { init: () => {
+            initMobileMenu();
+            initSmoothScroll();
+        }};
+    })();
 
     // Модуль: Прокрутка
     const ScrollHandler = (function () {
@@ -55,19 +118,6 @@
             }
         }
 
-        function initSmoothScroll() {
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', e => {
-                    e.preventDefault();
-                    const target = document.querySelector(anchor.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        history.pushState(null, null, anchor.getAttribute('href'));
-                    }
-                });
-            });
-        }
-
         function initScrollToTop() {
             const btn = document.getElementById('scrollToTopBtn');
             if (btn) {
@@ -77,7 +127,6 @@
 
         return { init: () => {
             initHeroScroll();
-            initSmoothScroll();
             initScrollToTop();
         }};
     })();
@@ -272,30 +321,58 @@
     // Модуль: Портфолио (Каталог дронов)
     const PortfolioHandler = (function () {
         function initCollapsible() {
-            document.querySelectorAll('.portfolio-collapsible').forEach(block => {
+            const blocks = document.querySelectorAll('.portfolio-collapsible');
+            
+            // Helper function to check if we're on mobile
+            const isMobile = () => window.innerWidth <= 768;
+            
+            // Helper function to toggle a specific block
+            const toggleBlock = (block, expanded) => {
                 const desc = block.querySelector('.portfolio-desc');
                 const content = block.querySelector('.collapsible-content');
                 const arrow = block.querySelector('.portfolio-toggle-arrow');
+                
+                if (expanded) {
+                    desc.classList.add('expanded');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.overflow = 'visible';
+                    if (arrow) {
+                        arrow.style.transform = 'rotate(180deg)';
+                    }
+                } else {
+                    desc.classList.remove('expanded');
+                    content.style.maxHeight = '0';
+                    content.style.overflow = 'hidden';
+                    if (arrow) {
+                        arrow.style.transform = 'rotate(0deg)';
+                    }
+                }
+            };
+
+            blocks.forEach((block, index) => {
                 let expanded = false;
 
                 const toggleExpansion = () => {
                     expanded = !expanded;
                     
-                    if (expanded) {
-                        desc.classList.add('expanded');
-                        content.style.maxHeight = content.scrollHeight + 'px';
-                        content.style.overflow = 'visible';
-                        if (arrow) {
-                            arrow.style.transform = 'rotate(180deg)';
-                        }
+                    if (isMobile()) {
+                        // On mobile: toggle only this block
+                        toggleBlock(block, expanded);
                     } else {
-                        desc.classList.remove('expanded');
-                        content.style.maxHeight = '0';
-                        content.style.overflow = 'hidden';
-                        if (arrow) {
-                            arrow.style.transform = 'rotate(0deg)';
-                        }
+                        // On desktop: toggle all blocks synchronously
+                        blocks.forEach((otherBlock, otherIndex) => {
+                            toggleBlock(otherBlock, expanded);
+                            // Update expanded state for all blocks
+                            if (otherIndex !== index) {
+                                // We need to access the expanded state of other blocks
+                                // Store it as a data attribute
+                                otherBlock.setAttribute('data-expanded', expanded.toString());
+                            }
+                        });
                     }
+                    
+                    // Store current state
+                    block.setAttribute('data-expanded', expanded.toString());
                 };
 
                 // Add click event to the whole collapsible block
@@ -309,6 +386,18 @@
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
                         toggleExpansion();
+                    }
+                });
+
+                // Handle window resize to maintain consistency
+                window.addEventListener('resize', () => {
+                    if (!isMobile()) {
+                        // On desktop, sync all blocks to the same state
+                        const currentExpanded = block.getAttribute('data-expanded') === 'true';
+                        blocks.forEach(otherBlock => {
+                            toggleBlock(otherBlock, currentExpanded);
+                            otherBlock.setAttribute('data-expanded', currentExpanded.toString());
+                        });
                     }
                 });
             });
@@ -584,6 +673,7 @@
 
     // Инициализация всех модулей
     document.addEventListener('DOMContentLoaded', () => {
+        NavigationHandler.init();
         ScrollHandler.init();
         ModalHandler.init();
         AnimationHandler.init();
