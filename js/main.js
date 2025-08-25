@@ -318,19 +318,21 @@
         }};
     })();
 
-    // Модуль: Портфолио (Каталог дронов)
+    // Модуль: Портфолио (Каталог дронов) и Прайс-лист
     const PortfolioHandler = (function () {
         function initCollapsible() {
-            const blocks = document.querySelectorAll('.portfolio-collapsible');
+            // Handle both portfolio and pricing collapsible sections
+            const portfolioBlocks = document.querySelectorAll('.portfolio-collapsible');
+            const pricingBlocks = document.querySelectorAll('.pricing-collapsible');
             
             // Helper function to check if we're on mobile
             const isMobile = () => window.innerWidth <= 768;
             
             // Helper function to toggle a specific block
-            const toggleBlock = (block, expanded) => {
-                const desc = block.querySelector('.portfolio-desc');
+            const toggleBlock = (block, expanded, type = 'portfolio') => {
+                const desc = block.querySelector(type === 'portfolio' ? '.portfolio-desc' : '.pricing-desc');
                 const content = block.querySelector('.collapsible-content');
-                const arrow = block.querySelector('.portfolio-toggle-arrow');
+                const arrow = block.querySelector(type === 'portfolio' ? '.portfolio-toggle-arrow' : '.pricing-toggle-arrow');
                 
                 if (expanded) {
                     desc.classList.add('expanded');
@@ -349,7 +351,8 @@
                 }
             };
 
-            blocks.forEach((block, index) => {
+            // Initialize portfolio blocks with synchronous behavior
+            portfolioBlocks.forEach((block, index) => {
                 let expanded = false;
 
                 const toggleExpansion = () => {
@@ -357,21 +360,17 @@
                     
                     if (isMobile()) {
                         // On mobile: toggle only this block
-                        toggleBlock(block, expanded);
+                        toggleBlock(block, expanded, 'portfolio');
                     } else {
-                        // On desktop: toggle all blocks synchronously
-                        blocks.forEach((otherBlock, otherIndex) => {
-                            toggleBlock(otherBlock, expanded);
-                            // Update expanded state for all blocks
+                        // On desktop: toggle all portfolio blocks synchronously
+                        portfolioBlocks.forEach((otherBlock, otherIndex) => {
+                            toggleBlock(otherBlock, expanded, 'portfolio');
                             if (otherIndex !== index) {
-                                // We need to access the expanded state of other blocks
-                                // Store it as a data attribute
                                 otherBlock.setAttribute('data-expanded', expanded.toString());
                             }
                         });
                     }
                     
-                    // Store current state
                     block.setAttribute('data-expanded', expanded.toString());
                 };
 
@@ -388,16 +387,42 @@
                         toggleExpansion();
                     }
                 });
+            });
 
-                // Handle window resize to maintain consistency
-                window.addEventListener('resize', () => {
-                    if (!isMobile()) {
-                        // On desktop, sync all blocks to the same state
-                        const currentExpanded = block.getAttribute('data-expanded') === 'true';
-                        blocks.forEach(otherBlock => {
-                            toggleBlock(otherBlock, currentExpanded);
-                            otherBlock.setAttribute('data-expanded', currentExpanded.toString());
+            // Initialize pricing blocks with synchronous behavior
+            pricingBlocks.forEach((block, index) => {
+                let expanded = false;
+
+                const toggleExpansion = () => {
+                    expanded = !expanded;
+                    
+                    if (isMobile()) {
+                        // On mobile: toggle only this block
+                        toggleBlock(block, expanded, 'pricing');
+                    } else {
+                        // On desktop: toggle all pricing blocks synchronously
+                        pricingBlocks.forEach((otherBlock, otherIndex) => {
+                            toggleBlock(otherBlock, expanded, 'pricing');
+                            if (otherIndex !== index) {
+                                otherBlock.setAttribute('data-expanded', expanded.toString());
+                            }
                         });
+                    }
+                    
+                    block.setAttribute('data-expanded', expanded.toString());
+                };
+
+                // Add click event to the whole collapsible block
+                block.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    toggleExpansion();
+                });
+
+                // Handle keyboard navigation
+                block.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleExpansion();
                     }
                 });
             });

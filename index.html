@@ -34,8 +34,8 @@
                     
                     <!-- Desktop Navigation -->
                     <nav class="hidden md:flex items-center space-x-6 lg:space-x-8">
-                        <a href="#about_service" class="nav-link text-white hover:text-[#95C11F] transition-colors duration-200 font-medium">Услуги</a>
-                        <a href="#portfolio" class="nav-link text-white hover:text-[#95C11F] transition-colors duration-200 font-medium">Каталог</a>
+                        <a href="#about_service" class="nav-link text-white hover:text-[#95C11F] transition-colors duration-200 font-medium">Наши услуги</a>
+                        <a href="#portfolio" class="nav-link text-white hover:text-[#95C11F] transition-colors duration-200 font-medium">Каталог дронов</a>
                         <a href="#pricing" class="nav-link text-white hover:text-[#95C11F] transition-colors duration-200 font-medium">Цены</a>
                     </nav>
 
@@ -48,7 +48,7 @@
 
                     <!-- Mobile Menu Button -->
                     <button id="mobile-menu-btn" class="md:hidden text-white p-2" aria-label="Открыть меню">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
@@ -58,10 +58,10 @@
             <!-- Mobile Navigation Menu -->
             <div id="mobile-menu" class="md:hidden bg-[#2E7D32] border-t border-[#1B5E20] hidden">
                 <div class="px-4 pt-2 pb-3 space-y-1">
-                    <a href="#about_service" class="mobile-nav-link block px-3 py-2 text-white hover:bg-[#1B5E20] rounded-md transition-colors duration-200">Услуги</a>
-                    <a href="#portfolio" class="mobile-nav-link block px-3 py-2 text-white hover:bg-[#1B5E20] rounded-md transition-colors duration-200">Каталог</a>
+                    <a href="#about_service" class="mobile-nav-link block px-3 py-2 text-white hover:bg-[#1B5E20] rounded-md transition-colors duration-200">Наши услуги</a>
+                    <a href="#portfolio" class="mobile-nav-link block px-3 py-2 text-white hover:bg-[#1B5E20] rounded-md transition-colors duration-200">Каталог дронов</a>
                     <a href="#pricing" class="mobile-nav-link block px-3 py-2 text-white hover:bg-[#1B5E20] rounded-md transition-colors duration-200">Цены</a>
-                    <a href="tel:+77077110155" class="mobile-nav-link block px-3 py-2 text-white hover:bg-[#1B5E20] rounded-md transition-colors duration-200 font-bold border-t border-[#1B5E20] mt-2 pt-3">
+                    <a href="tel:+77077110155" class="mobile-nav-link block px-3 py-2 text-white hover:bg-[#1B5E20] rounded-md transition-colors duration-200 font-bold">
                         +7 707 711 01 55
                     </a>
                 </div>
@@ -315,78 +315,85 @@
             </div>
         </div>
         </section>
-        <section id="pricing" data-section="pricing" class="w-full bg-[#FAFAFA] py-10 protected-content">
+        <section id="pricing" data-section="pricing" class="w-full bg-[#FAFAFA] py-10 protected-content" style="padding-bottom: 20px;padding-top: 20px;">
             <div class="section-container">
-                <h2 data-editable="true" class="text-4xl font-semibold text-center mb-8 text-[#154633]">Стоимость наших услуг</h2>        
-                <div class="pricing-categories">
-                    <!-- Дроны и комплекты -->
-                    <div class="pricing-category active" data-category="drones">
-                        <div class="pricing-category-header">
-                            <h3 class="pricing-category-title">Цены на агродроны и комплектующие</h3>
-                            <svg class="pricing-category-arrow" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <div class="pricing-category-content">
-                            <div class="pricing-items">
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">
-                                        <strong>Комплект дрона-опрыскивателя</strong><br>
-                                        <small>DJI Agras T50 - 1 шт, Интеллектуальная полетная батарея DB1560 - 2 шт, Генератор DJI D12000iEP - 1 шт</small>
+            <!-- <h2 data-editable="true" class="text-4xl font-semibold text-center mb-8 text-[#154633]">Стоимость наших услуг</h2> -->
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-8xl mx-auto">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6 text-center">
+                        <div class="pricing-collapsible cursor-pointer group" tabindex="0" style="outline:none;">
+                            <h3 data-editable="true" class="text-2xl font-semibold text-black">Стоимость наших услуг</h3>
+                            <div class="mt-3 text-sm text-gray-600 pricing-desc overflow-hidden relative">
+                                <ul class="list-none text-left space-y-2">
+                                    <div class="collapsible-content">
+                                        <div class="pricing-items space-y-0">
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">
+                                                    Комплект дрона-опрыскивателя<br>
+                                                    DJI Agras T50 - 1 шт, Интеллектуальная полетная батарея DB1560 - 2 шт, Генератор DJI D12000iEP - 1 шт
+                                                </div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">10 563 605 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Дрон-опрыскиватель DJI Agras T50</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">6 381 224 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Дрон-картограф DJI Mavic 3 Multispectral</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">2 506 296 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Интеллектуальная полетная батарея DB1560 для DJI Agras T50</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">1 184 969 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Генератор DJI D12000iEP</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">1 812 443 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Система разбрасывания DJI Agras T50</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">575 230 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Высокоточная GNSS мобильная станция DJI D-RTK 2 с триподом</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">2 086 934 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Батарея WB37</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">46 350 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Комплект зарядный блок + 3 батареи на DJI Mavic 3M</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">361 525 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Обработка полей агродронами (за гектар)</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">от 5 000 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3 border-b border-gray-100">
+                                                <div class="pricing-item-name flex-1 text-sm">Картографирование полей (за гектар)</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">от 2 000 тг</div>
+                                            </li>
+                                            <li class="pricing-item flex justify-between items-start py-3">
+                                                <div class="pricing-item-name flex-1 text-sm">Обучение пилотов (полный курс)</div>
+                                                <div class="pricing-item-price font-semibold text-[#154633] whitespace-nowrap ml-4 text-sm">от 300 000 тг</div>
+                                            </li>
+                                        </div>
                                     </div>
-                                    <div class="pricing-item-price">10 563 605 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Дрон-опрыскиватель DJI Agras T50</div>
-                                    <div class="pricing-item-price">6 381 224 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Дрон-картограф DJI Mavic 3 Multispectral</div>
-                                    <div class="pricing-item-price">2 506 296 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Интеллектуальная полетная батарея DB1560 для DJI Agras T50</div>
-                                    <div class="pricing-item-price">1 184 969 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Генератор DJI D12000iEP</div>
-                                    <div class="pricing-item-price">1 812 443 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Система разбрасывания DJI Agras T50</div>
-                                    <div class="pricing-item-price">575 230 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Высокоточная GNSS мобильная станция DJI D-RTK 2 с триподом</div>
-                                    <div class="pricing-item-price">2 086 934 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Батарея WB37</div>
-                                    <div class="pricing-item-price">46 350 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Комплект зарядный блок + 3 батареи на DJI Mavic 3M</div>
-                                    <div class="pricing-item-price">361 525 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Обработка полей агродронами (за гектар)</div>
-                                    <div class="pricing-item-price">от 5 000 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Картографирование полей (за гектар)</div>
-                                    <div class="pricing-item-price">от 2 000 тг</div>
-                                </div>
-                                <div class="pricing-item">
-                                    <div class="pricing-item-name">Обучение пилотов (полный курс)</div>
-                                    <div class="pricing-item-price">от 300 000 тг</div>
-                                </div>
+                                </ul>
+                            </div>
+                            <div class="flex justify-center">
+                                <button class="pricing-toggle mt-4 px-6 py-2 rounded-full bg-[#ffffff] text-[#022113] font-semibold shadow flex items-center justify-center gap-2 transition">
+                                    <svg class="pricing-toggle-arrow transition-transform duration-300" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path d="M6 9l6 6 6-6" stroke="#347C2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
                             </div>
                         </div>
                     </div>
-                <p class="pricing-note">
-                    * Точная стоимость рассчитывается индивидуально в зависимости от объема работ и технических требований
-                </p>
+                </div>
             </div>
+        </div>
         </section>
         <div id="promotion" data-section="promotion" class="w-full bg-[#FAFAFA] protected-content" style="padding-top: 30px;">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center overflow-hidden space-y-8">
@@ -460,7 +467,7 @@
         <footer id="footer" data-section="footer" class="w-full bg-[#2E7D32]" style="padding-bottom: 0px; padding-top: 10px;">
             <section id="contacts" data-section="contacts" class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
                 <div class="flex items-center gap-3 py-4">
-                    <p data-editable="true" class="text-gray-700 text-center text-[#ffffff]">Алматинская область, Енбекшиказахский район, с.Байтерек, ул. Центральная, 25</p>
+                    <p data-editable="true" class="text-gray-700 text-center text-[#ffffff]">Наш адрес: Алматинская область, Енбекшиказахский район, с.Байтерек, ул. Центральная, 25</p>
                 </div>
             </section>
             <div id="feedback-modal" action="https://formspree.io/f/manjvkzr" method="POST" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.45); align-items:center; justify-content:center; transition:opacity 0.3s;">
