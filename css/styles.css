@@ -1,5 +1,5 @@
 :root {
-    --primary-green: #287700;
+    --primary-green: #2E7D32;
     --secondary-green: #347C2C;
     --button-green: #95C11F;
     --highlight-yellow: #DFEB38;
@@ -370,8 +370,8 @@ header a:hover {
 
 .pricing-item-price {
     color: #154633;
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 300;
     white-space: nowrap;
 }
 
