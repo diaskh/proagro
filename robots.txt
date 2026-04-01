@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://agrodrone.asia/sitemap.xml
+
+Sitemap: https://proagrodrone.kz/sitemap.xml

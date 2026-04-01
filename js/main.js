@@ -136,7 +136,7 @@
         const modal = document.getElementById('feedback-modal');
         const modalContent = document.getElementById('feedback-modal-content');
         const closeBtn = document.getElementById('close-feedback-modal');
-        const openButtons = document.querySelectorAll('#hero-feedback-btn, #about-feedback-btn');
+        const openButtons = document.querySelectorAll('#hero-feedback-btn, #about-feedback-btn, #training-feedback-btn');
 
         function openModal() {
             if (modal && modalContent) {
@@ -433,6 +433,101 @@
         };
     })();
 
+    // Модуль: Product Slider (Каталог дронов)
+    const ProductSliderHandler = (function () {
+        function init() {
+            const sliderNode = document.querySelector('.product-slider.embla');
+            if (!sliderNode) return;
+
+            const prevBtn = sliderNode.querySelector('.product-nav-prev');
+            const nextBtn = sliderNode.querySelector('.product-nav-next');
+            const dotsContainer = sliderNode.querySelector('.product-dots');
+            
+            const emblaApi = EmblaCarousel(sliderNode, { loop: false });
+
+            if (dotsContainer) {
+                dotsContainer.innerHTML = '';
+                const snapList = emblaApi.scrollSnapList();
+                const dots = [];
+
+                snapList.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('product-dot');
+                    if (index === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => emblaApi.scrollTo(index));
+                    dotsContainer.appendChild(dot);
+                    dots.push(dot);
+                });
+
+                const onSelect = () => {
+                    const previous = emblaApi.previousScrollSnap();
+                    const selected = emblaApi.selectedScrollSnap();
+                    if (dots[previous]) dots[previous].classList.remove('active');
+                    if (dots[selected]) dots[selected].classList.add('active');
+                };
+
+                emblaApi.on('select', onSelect);
+                emblaApi.on('reInit', onSelect);
+            }
+
+            if (prevBtn) prevBtn.addEventListener('click', () => emblaApi.scrollPrev());
+            if (nextBtn) nextBtn.addEventListener('click', () => emblaApi.scrollNext());
+
+            // Initialize thumbnail image switching for each slide
+            const slides = sliderNode.querySelectorAll('.product-slide');
+            slides.forEach(slide => {
+                initThumbnailSwitching(slide);
+            });
+
+            // Make product CTA buttons open the modal
+            const productCTAs = sliderNode.querySelectorAll('.product-cta');
+            const modal = document.getElementById('feedback-modal');
+            const modalContent = document.getElementById('feedback-modal-content');
+
+            productCTAs.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (modal && modalContent) {
+                        modal.style.display = 'flex';
+                        modal.setAttribute('role', 'dialog');
+                        modal.setAttribute('aria-modal', 'true');
+                        setTimeout(() => {
+                            modalContent.style.opacity = '1';
+                            modalContent.style.transform = 'scale(1)';
+                        }, 10);
+                    }
+                });
+            });
+        }
+
+        // Internal image switching via thumbnails (tap only, no swipe)
+        function initThumbnailSwitching(slideElement) {
+            const mainImageContainer = slideElement.querySelector('.product-main-image');
+            const thumbnails = slideElement.querySelectorAll('.thumbnail');
+            const mainImages = slideElement.querySelectorAll('.product-main-image img');
+
+            if (!mainImageContainer || thumbnails.length === 0) return;
+
+            thumbnails.forEach((thumb, index) => {
+                thumb.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Prevent bubble to slider
+
+                    // Update active thumbnail
+                    thumbnails.forEach(t => t.classList.remove('active'));
+                    thumb.classList.add('active');
+
+                    // Update active main image
+                    mainImages.forEach(img => img.classList.remove('active'));
+                    if (mainImages[index]) {
+                        mainImages[index].classList.add('active');
+                    }
+                });
+            });
+        }
+
+        return { init };
+    })();
+
     // Модуль: FAQ
     const FAQHandler = (function () {
         function init() {
@@ -484,80 +579,92 @@
     // Модуль: Слайдер
     const SliderHandler = (function () {
         function init() {
-            const slidesContainer = document.querySelector('.slides');
-            const slides = document.querySelectorAll('.slide');
-            const dotsContainer = document.querySelector('.dots');
-            
-            if (!slidesContainer || !slides.length || !dotsContainer) return;
-            
-            const images = slidesContainer.querySelectorAll('img');
-            let currentIndex = 0;
-            let isAnimating = false;
-            let totalSlides = slides.length;
+            const sliderNodes = document.querySelectorAll('.slider.embla');
+            if (sliderNodes.length === 0) return;
 
-            // Предзагрузка всех изображений
-            let loadedCount = 0;
-            const totalImages = images.length;
+            sliderNodes.forEach(emblaNode => {
+                const dotsContainer = emblaNode.querySelector('.dots');
+                const options = { loop: true };
+                let plugins = [];
+                if (typeof EmblaCarouselAutoplay !== 'undefined') {
+                    plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
+                }
+                const emblaApi = EmblaCarousel(emblaNode, options, plugins);
+                
+                if (dotsContainer) {
+                    dotsContainer.innerHTML = '';
+                    const snapList = emblaApi.scrollSnapList();
+                    const dots = [];
 
-            images.forEach(img => {
-                const tempImg = new Image();
-                tempImg.src = img.src;
-                tempImg.onload = tempImg.onerror = () => {
-                    loadedCount++;
-                    if (loadedCount === totalImages) {
-                        startSlider(); // Запускаем после полной загрузки
-                    }
-                };
+                    snapList.forEach((_, index) => {
+                        const dot = document.createElement('div');
+                        dot.classList.add('dot');
+                        if (index === 0) dot.classList.add('active');
+                        // Embla dots
+                        dot.addEventListener('click', () => {
+                            emblaApi.scrollTo(index);
+                            if (plugins.length > 0) plugins[0].reset();
+                        });
+                        dotsContainer.appendChild(dot);
+                        dots.push(dot);
+                    });
+
+                    const onSelect = () => {
+                        const previous = emblaApi.previousScrollSnap();
+                        const selected = emblaApi.selectedScrollSnap();
+                        if (dots[previous]) dots[previous].classList.remove('active');
+                        if (dots[selected]) dots[selected].classList.add('active');
+                    };
+
+                    emblaApi.on('select', onSelect);
+                    emblaApi.on('reInit', onSelect);
+                }
             });
+        }
 
-            // Функция запуска слайдера
-            function startSlider() {
-                // Клонируем первый слайд и добавляем в конец
-                const firstSlide = slidesContainer.children[0].cloneNode(true);
-                slidesContainer.appendChild(firstSlide);
+        return { init };
+    })();
 
+    // Модуль: Advantages Mobile Slider
+    const AdvantagesSliderHandler = (function () {
+        function init() {
+            // Only initialize on mobile
+            if (window.innerWidth >= 768) return;
+
+            const sliderNodes = document.querySelectorAll('.advantages-slider.embla');
+            if (sliderNodes.length === 0) return;
+
+            sliderNodes.forEach(emblaNode => {
+                const dotsContainer = emblaNode.querySelector('.advantages-dots');
+                if (!dotsContainer) return;
+                
+                // Clear dots if previously initialized
+                dotsContainer.innerHTML = '';
+
+                const emblaApi = EmblaCarousel(emblaNode, { loop: false });
+                
+                const snapList = emblaApi.scrollSnapList();
                 const dots = [];
 
-                // Создание точек (только для оригинальных слайдов)
-                for (let i = 0; i < totalSlides; i++) {
+                snapList.forEach((_, index) => {
                     const dot = document.createElement('div');
-                    dot.classList.add('dot');
-                    if (i === 0) dot.classList.add('active');
+                    dot.classList.add('advantage-dot');
+                    if (index === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => emblaApi.scrollTo(index));
                     dotsContainer.appendChild(dot);
                     dots.push(dot);
-                }
+                });
 
-                function updateDots(index) {
-                    dots.forEach(dot => dot.classList.remove('active'));
-                    dots[index % dots.length].classList.add('active');
-                }
+                const onSelect = () => {
+                    const previous = emblaApi.previousScrollSnap();
+                    const selected = emblaApi.selectedScrollSnap();
+                    if (dots[previous]) dots[previous].classList.remove('active');
+                    if (dots[selected]) dots[selected].classList.add('active');
+                };
 
-                function nextSlide() {
-                    if (isAnimating) return;
-                    isAnimating = true;
-                    currentIndex++;
-
-                    // Move exactly by slide width including padding
-                    slidesContainer.style.transition = 'transform 0.6s ease-in-out';
-                    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-
-                    setTimeout(() => {
-                        // Если дошли до клонированного слайда
-                        if (currentIndex === totalSlides) {
-                            slidesContainer.style.transition = 'none';
-                            slidesContainer.style.transform = 'translateX(0%)';
-                            currentIndex = 0;
-                        }
-                        updateDots(currentIndex);
-                        isAnimating = false;
-                    }, 600);
-                }
-
-                // Initial setup to ensure no next slide is visible
-                slidesContainer.style.transform = 'translateX(0%)';
-                
-                setInterval(nextSlide, 2000);
-            }
+                emblaApi.on('select', onSelect);
+                emblaApi.on('reInit', onSelect);
+            });
         }
 
         return { init };
@@ -703,10 +810,22 @@
         ModalHandler.init();
         AnimationHandler.init();
         PortfolioHandler.init();
+        ProductSliderHandler.init();
         FAQHandler.init();
         SliderHandler.init();
+        AdvantagesSliderHandler.init();
         FormHandler.init();
         YearHandler.init();
-        PricingHandler.init(); 
+        PricingHandler.init();
+    });
+
+    // Reinitialize advantages slider on resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth < 768) {
+            const dotsContainer = document.querySelector('.advantages-dots');
+            if (dotsContainer && dotsContainer.children.length === 0) {
+                AdvantagesSliderHandler.init();
+            }
+        }
     });
 })();

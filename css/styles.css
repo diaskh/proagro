@@ -17,6 +17,19 @@ html {
   scroll-behavior: smooth;
 }
 
+.embla {
+  overflow: hidden;
+}
+.embla__container {
+  display: flex;
+  touch-action: pan-y;
+}
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
 body {
     font-family: 'Open Sans', Arial, sans-serif !important; 
     margin: 0;
@@ -484,6 +497,92 @@ header a:hover {
     margin-bottom: 0.5rem;
 }
 
+/* Advantages Mobile Slider */
+.advantages-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    display: block;
+}
+
+.advantages-slides {
+    display: flex;
+    width: 100%;
+}
+
+.advantage-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    width: 100%;
+    padding: 0 0.5rem;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.advantage-slide > div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.advantages-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
+.advantage-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border: none;
+    padding: 0;
+}
+
+.advantage-dot.active {
+    background: var(--primary-green);
+}
+
+/* Advantages Grid - Desktop */
+.advantages-grid {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    grid-auto-rows: 1fr; /* Force all rows to have the same height */
+}
+
+.advantages-grid > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Mobile: show slider, hide grid */
+@media (max-width: 767px) {
+    .advantages-grid {
+        display: none !important;
+    }
+
+    .advantages-slider {
+        display: block !important;
+    }
+}
+
+/* Desktop: show grid, hide slider */
+@media (min-width: 768px) {
+    .advantages-slider {
+        display: none !important;
+    }
+
+    .advantages-grid {
+        display: grid !important;
+    }
+}
+
 /* Slider Section */
 #sliders {
     background: var(--background-light);
@@ -510,7 +609,6 @@ header a:hover {
 
 .slides {
     display: flex;
-    transition: transform 0.6s ease-in-out;
     will-change: transform;
     width: 100%;
 }
@@ -615,31 +713,263 @@ header a:hover {
     margin-bottom: 2rem;
 }
 
-#portfolio .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+/* Product Slider */
+.product-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-#portfolio .bg-white {
+.product-slides {
+    display: flex;
+    width: 100%;
+}
+
+.product-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+.product-slide-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
     background: white;
-    border-radius: 8px;
+    border-radius: 12px;
+    padding: 2rem;
     box-shadow: 0 2px 8px var(--shadow-color);
 }
 
-#portfolio img {
+/* Left Column - Images */
+.product-images {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.product-main-image {
+    position: relative;
     width: 100%;
-    height: 220px;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #f5f5f5;
+}
+
+.product-main-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-main-image img.active {
+    opacity: 1;
+}
+
+.product-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.thumbnail {
+    flex: 0 0 60px;
+    width: 60px;
+    height: 60px;
+    border-radius: 6px;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s ease;
+}
+
+.thumbnail.active {
+    border-color: var(--primary-green);
+}
+
+.thumbnail img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-#portfolio h3 {
+/* Right Column - Content */
+.product-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.product-content h3 {
+    margin: 0;
     color: #154633;
     font-size: 1.5rem;
 }
 
-#portfolio button {
-	justify-content: center;
+.product-description {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.product-specs {
+    flex-grow: 1;
+}
+
+.product-specs ul {
+    padding: 0;
+    margin: 0;
+}
+
+.product-specs li {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.product-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 0.75rem;
+    margin-top: auto;
+    flex-wrap: wrap;
+}
+
+.product-actions .btn-download {
+    flex: 1;
+    min-width: 140px;
+    background: #f5f5f5;
+    color: var(--text-dark);
+    border: none;
+}
+
+.product-actions .btn {
+    flex: 1;
+    min-width: 140px;
+}
+
+.product-cta {
+    width: auto;
+}
+
+/* Slider Navigation */
+.product-slider-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.product-nav-prev,
+.product-nav-next {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.product-nav-prev:hover,
+.product-nav-next:hover {
+    transform: scale(1.1);
+}
+
+.product-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.product-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border: none;
+    padding: 0;
+}
+
+.product-dot.active {
+    background: var(--primary-green);
+}
+
+/* Mobile Styles - Stack vertically */
+@media (max-width: 768px) {
+    .product-slide-inner {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .product-main-image {
+        aspect-ratio: 4/3;
+    }
+
+    .product-thumbnails {
+        justify-content: center;
+    }
+
+    .thumbnail {
+        width: 50px;
+        height: 50px;
+    }
+
+    .product-content {
+        text-align: center;
+    }
+
+    .product-specs ul {
+        text-align: left;
+    }
+
+    .product-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .product-actions .btn-download,
+    .product-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .product-nav-prev,
+    .product-nav-next {
+        width: 36px;
+        height: 36px;
+    }
+
+    .product-dot {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .product-slide {
+        padding: 0 0.5rem;
+    }
+
+    .product-slide-inner {
+        padding: 1rem;
+    }
 }
 .portfolio-collapsible {
     cursor: pointer;
@@ -686,6 +1016,122 @@ header a:hover {
     transform: rotate(180deg);
 }
 
+/* Pilot Training Section */
+#pilot-training {
+    background: var(--background-light);
+}
+
+.pilot-training-card {
+    max-width: 100%;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.pilot-training-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white" fill-opacity="0.05"><circle cx="80" cy="20" r="40"/><circle cx="90" cy="70" r="25"/></svg>') no-repeat right center;
+    background-size: cover;
+    pointer-events: none;
+}
+
+.pilot-training-inner {
+    padding: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.pilot-training-content {
+    max-width: 800px;
+}
+
+.pilot-training-content h2 {
+    color: white !important;
+    margin-bottom: 1.5rem;
+    font-size: 2.25rem;
+    font-weight: 600;
+}
+
+.pilot-training-content p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 0;
+}
+
+.pilot-training-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border-radius: 9999px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(4px);
+}
+
+.btn-download:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.btn-download svg {
+    flex-shrink: 0;
+}
+
+#pilot-training .btn {
+    background: #95C11F;
+    color: #022113;
+}
+
+#pilot-training .btn:hover {
+    background: #DFEB38;
+}
+
+@media (max-width: 768px) {
+    .pilot-training-inner {
+        padding: 2rem 1.5rem;
+    }
+
+    .pilot-training-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .pilot-training-content p {
+        font-size: 0.95rem;
+    }
+
+    .pilot-training-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .pilot-training-actions .btn-download,
+    .pilot-training-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
 /* FAQ Section */
 #faq {
     background: var(--background-light);
@@ -699,20 +1145,47 @@ header a:hover {
 }
 
 .faq-item {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px var(--shadow-color);
+    background: white !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
     overflow: hidden;
+    border-bottom: none !important;
+    margin: 0 !important;
+}
+
+.faq-item:first-child {
+    border-top: none !important;
+}
+
+#faq-list {
+    border-radius: 0 !important;
+    box-shadow: none !important;
 }
 
 .faq-question {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem;
+    width: 100%;
+    padding: 1.25rem 1.5rem;
     color: #154633;
     font-size: 1.125rem;
     cursor: pointer;
+    background: white;
+    border: none;
+    text-align: left;
+    min-height: 44px;
+}
+
+.faq-question:hover {
+    background: #fafafa;
+}
+
+@media (max-width: 640px) {
+    .faq-question {
+        padding: 1rem;
+        font-size: 1rem;
+    }
 }
 
 
