@@ -641,7 +641,12 @@
                 // Clear dots if previously initialized
                 dotsContainer.innerHTML = '';
 
-                const emblaApi = EmblaCarousel(emblaNode, { loop: false });
+                const options = { loop: true };
+                let plugins = [];
+                if (typeof EmblaCarouselAutoplay !== 'undefined') {
+                    plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
+                }
+                const emblaApi = EmblaCarousel(emblaNode, options, plugins);
                 
                 const snapList = emblaApi.scrollSnapList();
                 const dots = [];
@@ -650,7 +655,10 @@
                     const dot = document.createElement('div');
                     dot.classList.add('advantage-dot');
                     if (index === 0) dot.classList.add('active');
-                    dot.addEventListener('click', () => emblaApi.scrollTo(index));
+                    dot.addEventListener('click', () => {
+                        emblaApi.scrollTo(index);
+                        if (plugins.length > 0) plugins[0].reset();
+                    });
                     dotsContainer.appendChild(dot);
                     dots.push(dot);
                 });

@@ -915,15 +915,18 @@ header a:hover {
     .product-slide-inner {
         grid-template-columns: 1fr;
         gap: 1.5rem;
-        padding: 1.5rem;
+        padding: 0;
+        overflow: hidden;
     }
 
     .product-main-image {
         aspect-ratio: 4/3;
+        border-radius: 0;
     }
 
     .product-thumbnails {
         justify-content: center;
+        padding: 0 1.5rem;
     }
 
     .thumbnail {
@@ -933,6 +936,7 @@ header a:hover {
 
     .product-content {
         text-align: center;
+        padding: 0 1.5rem 1.5rem 1.5rem;
     }
 
     .product-specs ul {
@@ -968,7 +972,15 @@ header a:hover {
     }
 
     .product-slide-inner {
-        padding: 1rem;
+        padding: 0;
+    }
+
+    .product-thumbnails {
+        padding: 0 1rem;
+    }
+
+    .product-content {
+        padding: 0 1rem 1rem 1rem;
     }
 }
 .portfolio-collapsible {
@@ -1019,83 +1031,43 @@ header a:hover {
 /* Pilot Training Section */
 #pilot-training {
     background: var(--background-light);
+    padding: 2rem 1rem;
 }
 
-.pilot-training-card {
-    max-width: 100%;
-    margin: 0 auto;
-    background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
-    border-radius: 16px;
-    overflow: hidden;
-    position: relative;
-}
-
-.pilot-training-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 40%;
-    height: 100%;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white" fill-opacity="0.05"><circle cx="80" cy="20" r="40"/><circle cx="90" cy="70" r="25"/></svg>') no-repeat right center;
-    background-size: cover;
-    pointer-events: none;
-}
-
-.pilot-training-inner {
-    padding: 3rem;
-    position: relative;
-    z-index: 1;
-}
-
-.pilot-training-content {
-    max-width: 800px;
-}
-
-.pilot-training-content h2 {
-    color: white !important;
-    margin-bottom: 1.5rem;
-    font-size: 2.25rem;
-    font-weight: 600;
-}
-
-.pilot-training-content p {
-    color: rgba(255, 255, 255, 0.9);
-    line-height: 1.8;
-    font-size: 1.05rem;
-    margin-bottom: 0;
-}
-
-.pilot-training-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    align-items: center;
-    margin-top: 2rem;
-}
-
+/* Download Button global styles */
 .btn-download {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     padding: 0.875rem 1.5rem;
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
+    background: rgba(46, 125, 50, 0.1);
+    color: #154633;
     border-radius: 9999px;
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.2s ease;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(4px);
+    border: 1px solid rgba(46, 125, 50, 0.3);
 }
 
 .btn-download:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(46, 125, 50, 0.2);
 }
 
 .btn-download svg {
     flex-shrink: 0;
+}
+
+#pilot-training h2 {
+    color: #154633 !important;
+}
+
+#pilot-training h3 {
+    color: #154633 !important;
+}
+
+#pilot-training p {
+    color: #022113 !important;
 }
 
 #pilot-training .btn {
@@ -1107,26 +1079,23 @@ header a:hover {
     background: #DFEB38;
 }
 
+#pilot-training .btn-download {
+    margin-right: 15px; /* Spacing for button row */
+}
+
 @media (max-width: 768px) {
-    .pilot-training-inner {
-        padding: 2rem 1.5rem;
-    }
-
-    .pilot-training-content h2 {
-        font-size: 1.5rem;
-    }
-
-    .pilot-training-content p {
-        font-size: 0.95rem;
-    }
-
-    .pilot-training-actions {
+    #pilot-training .flex-col {
         flex-direction: column;
         align-items: stretch;
     }
-
-    .pilot-training-actions .btn-download,
-    .pilot-training-actions .btn {
+    
+    #pilot-training .btn-download {
+        margin-right: 0;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+    
+    #pilot-training .btn {
         width: 100%;
         justify-content: center;
     }
