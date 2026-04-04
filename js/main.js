@@ -433,54 +433,44 @@
         };
     })();
 
-    // Модуль: Product Slider (Каталог дронов)
-    const ProductSliderHandler = (function () {
+    // Модуль: Catalog Image Sliders (Каталог дронов)
+    const CatalogSliderHandler = (function () {
         function init() {
-            const sliderNode = document.querySelector('.product-slider.embla');
-            if (!sliderNode) return;
+            const sliders = document.querySelectorAll('.product-image-slider.embla');
+            if (sliders.length === 0) return;
 
-            const prevBtn = sliderNode.querySelector('.product-nav-prev');
-            const nextBtn = sliderNode.querySelector('.product-nav-next');
-            const dotsContainer = sliderNode.querySelector('.product-dots');
-            
-            const emblaApi = EmblaCarousel(sliderNode, { loop: false });
+            sliders.forEach(sliderNode => {
+                const dotsContainer = sliderNode.querySelector('.catalog-image-dots');
+                const emblaApi = EmblaCarousel(sliderNode, { loop: true });
 
-            if (dotsContainer) {
-                dotsContainer.innerHTML = '';
-                const snapList = emblaApi.scrollSnapList();
-                const dots = [];
+                if (dotsContainer) {
+                    dotsContainer.innerHTML = '';
+                    const snapList = emblaApi.scrollSnapList();
+                    const dots = [];
 
-                snapList.forEach((_, index) => {
-                    const dot = document.createElement('div');
-                    dot.classList.add('product-dot');
-                    if (index === 0) dot.classList.add('active');
-                    dot.addEventListener('click', () => emblaApi.scrollTo(index));
-                    dotsContainer.appendChild(dot);
-                    dots.push(dot);
-                });
+                    snapList.forEach((_, index) => {
+                        const dot = document.createElement('div');
+                        dot.classList.add('catalog-image-dot');
+                        if (index === 0) dot.classList.add('active');
+                        dot.addEventListener('click', () => emblaApi.scrollTo(index));
+                        dotsContainer.appendChild(dot);
+                        dots.push(dot);
+                    });
 
-                const onSelect = () => {
-                    const previous = emblaApi.previousScrollSnap();
-                    const selected = emblaApi.selectedScrollSnap();
-                    if (dots[previous]) dots[previous].classList.remove('active');
-                    if (dots[selected]) dots[selected].classList.add('active');
-                };
+                    const onSelect = () => {
+                        const previous = emblaApi.previousScrollSnap();
+                        const selected = emblaApi.selectedScrollSnap();
+                        if (dots[previous]) dots[previous].classList.remove('active');
+                        if (dots[selected]) dots[selected].classList.add('active');
+                    };
 
-                emblaApi.on('select', onSelect);
-                emblaApi.on('reInit', onSelect);
-            }
-
-            if (prevBtn) prevBtn.addEventListener('click', () => emblaApi.scrollPrev());
-            if (nextBtn) nextBtn.addEventListener('click', () => emblaApi.scrollNext());
-
-            // Initialize thumbnail image switching for each slide
-            const slides = sliderNode.querySelectorAll('.product-slide');
-            slides.forEach(slide => {
-                initThumbnailSwitching(slide);
+                    emblaApi.on('select', onSelect);
+                    emblaApi.on('reInit', onSelect);
+                }
             });
 
-            // Make product CTA buttons open the modal
-            const productCTAs = sliderNode.querySelectorAll('.product-cta');
+            // Make product CTA buttons open the feedback modal
+            const productCTAs = document.querySelectorAll('.product-cta');
             const modal = document.getElementById('feedback-modal');
             const modalContent = document.getElementById('feedback-modal-content');
 
@@ -500,33 +490,9 @@
             });
         }
 
-        // Internal image switching via thumbnails (tap only, no swipe)
-        function initThumbnailSwitching(slideElement) {
-            const mainImageContainer = slideElement.querySelector('.product-main-image');
-            const thumbnails = slideElement.querySelectorAll('.thumbnail');
-            const mainImages = slideElement.querySelectorAll('.product-main-image img');
-
-            if (!mainImageContainer || thumbnails.length === 0) return;
-
-            thumbnails.forEach((thumb, index) => {
-                thumb.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Prevent bubble to slider
-
-                    // Update active thumbnail
-                    thumbnails.forEach(t => t.classList.remove('active'));
-                    thumb.classList.add('active');
-
-                    // Update active main image
-                    mainImages.forEach(img => img.classList.remove('active'));
-                    if (mainImages[index]) {
-                        mainImages[index].classList.add('active');
-                    }
-                });
-            });
-        }
-
         return { init };
     })();
+
 
     // Модуль: FAQ
     const FAQHandler = (function () {
@@ -535,25 +501,30 @@
                 const btn = item.querySelector('.faq-question');
                 const answer = item.querySelector('.faq-answer');
                 const arrow = item.querySelector('.faq-arrow');
-                
+
                 if (btn && answer && arrow) {
                     btn.addEventListener('click', () => {
                         const isExpanded = answer.style.maxHeight && answer.style.maxHeight !== '0px';
-                        
-                        // Close all other FAQ items
-                        document.querySelectorAll('.faq-item').forEach(otherItem => {
-                            if (otherItem !== item) {
-                                const otherAnswer = otherItem.querySelector('.faq-answer');
-                                const otherArrow = otherItem.querySelector('.faq-arrow');
-                                if (otherAnswer && otherArrow) {
-                                    otherAnswer.style.maxHeight = '0';
-                                    otherAnswer.style.paddingBottom = '0';
-                                    otherArrow.style.transform = 'rotate(0deg)';
-                                    otherItem.classList.remove('active');
+
+                        // Find parent category
+                        const category = item.closest('.faq-category');
+
+                        // Close all OTHER items in SAME category only
+                        if (category) {
+                            category.querySelectorAll('.faq-item').forEach(otherItem => {
+                                if (otherItem !== item) {
+                                    const otherAnswer = otherItem.querySelector('.faq-answer');
+                                    const otherArrow = otherItem.querySelector('.faq-arrow');
+                                    if (otherAnswer && otherArrow) {
+                                        otherAnswer.style.maxHeight = '0';
+                                        otherAnswer.style.paddingBottom = '0';
+                                        otherArrow.style.transform = 'rotate(0deg)';
+                                        otherItem.classList.remove('active');
+                                    }
                                 }
-                            }
-                        });
-                        
+                            });
+                        }
+
                         // Toggle current item
                         if (isExpanded) {
                             // Close current item
@@ -818,7 +789,7 @@
         ModalHandler.init();
         AnimationHandler.init();
         PortfolioHandler.init();
-        ProductSliderHandler.init();
+        CatalogSliderHandler.init();
         FAQHandler.init();
         SliderHandler.init();
         AdvantagesSliderHandler.init();
