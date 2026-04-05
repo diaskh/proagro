@@ -711,10 +711,40 @@ li.always-visible.pricing-item {
     max-height: 1000px;
 }
 
-/* Push download button to bottom when expanded on desktop */
+/* Portfolio-specific download button styling (white card background needs dark text) */
+#portfolio .btn-download {
+    background: rgba(53, 124, 44, 0.08);
+    color: #154633;
+    border-color: rgba(53, 124, 44, 0.4);
+}
+
+#portfolio .btn-download:hover {
+    background: rgba(53, 124, 44, 0.16);
+    border-color: #154633;
+}
+
+#portfolio .btn-download svg path {
+    stroke: #154633;
+}
+
+/* Download button: hidden by default, shown only when expanded */
+#portfolio .portfolio-download-btn {
+    display: none;
+    margin-top: auto;
+}
+
+#portfolio .portfolio-collapsible.expanded .portfolio-download-btn {
+    display: flex;
+}
+
+/* Portfolio desc grows to fill card height so button always anchors to bottom */
 @media (min-width: 768px) {
-    .collapsible-content > li:last-child {
-        margin-top: auto;
+    #portfolio .portfolio-collapsible {
+        justify-content: flex-start;
+    }
+
+    #portfolio .portfolio-collapsible .portfolio-desc {
+        flex: 1;
     }
 }
 

@@ -357,25 +357,44 @@
 
                 const toggleExpansion = () => {
                     expanded = !expanded;
-                    
+
                     if (isMobile()) {
                         // On mobile: toggle only this block
                         toggleBlock(block, expanded, 'portfolio');
+                        block.classList.toggle('expanded', expanded);
                     } else {
                         // On desktop: toggle all portfolio blocks synchronously
                         portfolioBlocks.forEach((otherBlock, otherIndex) => {
                             toggleBlock(otherBlock, expanded, 'portfolio');
+                            otherBlock.classList.toggle('expanded', expanded);
                             if (otherIndex !== index) {
                                 otherBlock.setAttribute('data-expanded', expanded.toString());
                             }
                         });
                     }
-                    
+
                     block.setAttribute('data-expanded', expanded.toString());
                 };
 
+                // Prevent download button click from toggling the card
+                const downloadBtn = block.querySelector('.portfolio-download-btn');
+                if (downloadBtn) {
+                    downloadBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                    // Also prevent the anchor inside from being affected by e.preventDefault on parent
+                    const anchor = downloadBtn.querySelector('a');
+                    if (anchor) {
+                        anchor.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                        });
+                    }
+                }
+
                 // Add click event to the whole collapsible block
                 block.addEventListener('click', (e) => {
+                    // Don't toggle if clicking the download button or its anchor
+                    if (e.target.closest('.portfolio-download-btn')) return;
                     e.preventDefault();
                     toggleExpansion();
                 });
@@ -388,6 +407,7 @@
                     }
                 });
             });
+
 
             // Initialize pricing blocks with synchronous behavior
             pricingBlocks.forEach((block, index) => {
