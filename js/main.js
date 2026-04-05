@@ -333,10 +333,17 @@
                 const desc = block.querySelector(type === 'portfolio' ? '.portfolio-desc' : '.pricing-desc');
                 const content = block.querySelector('.collapsible-content');
                 const arrow = block.querySelector(type === 'portfolio' ? '.portfolio-toggle-arrow' : '.pricing-toggle-arrow');
-                
+
                 if (expanded) {
                     desc.classList.add('expanded');
-                    content.style.maxHeight = content.scrollHeight + 'px';
+                    // Temporarily remove max-height to get true scrollHeight
+                    content.style.maxHeight = 'none';
+                    const height = content.scrollHeight;
+                    content.style.maxHeight = '0';
+                    // Force reflow
+                    content.offsetHeight;
+                    // Set to calculated height with buffer
+                    content.style.maxHeight = (height + 50) + 'px';
                     content.style.overflow = 'visible';
                     if (arrow) {
                         arrow.style.transform = 'rotate(180deg)';
@@ -351,29 +358,29 @@
                 }
             };
 
+            // Shared state for portfolio blocks on desktop
+            let portfolioExpanded = false;
+
             // Initialize portfolio blocks with synchronous behavior
             portfolioBlocks.forEach((block, index) => {
                 let expanded = false;
 
                 const toggleExpansion = () => {
-                    expanded = !expanded;
-
                     if (isMobile()) {
-                        // On mobile: toggle only this block
+                        // On mobile: toggle only this block with its own state
+                        expanded = !expanded;
                         toggleBlock(block, expanded, 'portfolio');
                         block.classList.toggle('expanded', expanded);
+                        block.setAttribute('data-expanded', expanded.toString());
                     } else {
-                        // On desktop: toggle all portfolio blocks synchronously
-                        portfolioBlocks.forEach((otherBlock, otherIndex) => {
-                            toggleBlock(otherBlock, expanded, 'portfolio');
-                            otherBlock.classList.toggle('expanded', expanded);
-                            if (otherIndex !== index) {
-                                otherBlock.setAttribute('data-expanded', expanded.toString());
-                            }
+                        // On desktop: toggle all portfolio blocks synchronously with shared state
+                        portfolioExpanded = !portfolioExpanded;
+                        portfolioBlocks.forEach((otherBlock) => {
+                            toggleBlock(otherBlock, portfolioExpanded, 'portfolio');
+                            otherBlock.classList.toggle('expanded', portfolioExpanded);
+                            otherBlock.setAttribute('data-expanded', portfolioExpanded.toString());
                         });
                     }
-
-                    block.setAttribute('data-expanded', expanded.toString());
                 };
 
                 // Prevent download button click from toggling the card
