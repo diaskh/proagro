@@ -365,15 +365,20 @@ header a:hover {
 .pricing-items {
     padding-left: 0;
     list-style: none;
+    width: 100%;
+    display: block;
 }
 
 .pricing-item {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     padding: 0.75rem 0;
     border-bottom: 1px solid #e5e7eb;
     flex-wrap: nowrap;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .pricing-item:hover {
@@ -384,21 +389,23 @@ header a:hover {
     flex: 1;
     font-size: 15px;
     color: #374151;
+    line-height: 1.4;
+    margin-right: 1rem;
 }
 
 .pricing-item-name small {
+    display: block;
     font-size: 13px;
     color: #6b7280;
     line-height: 1.4;
+    margin-top: 0.25rem;
 }
 
 .pricing-item-price {
     font-weight: 600;
     color: #154633;
     white-space: nowrap;
-    margin-left: 1rem;
     font-size: 15px;
-    padding-top: 0.125rem;
     flex-shrink: 0;
 }
 
@@ -424,15 +431,18 @@ header a:hover {
 @media (max-width: 640px) {
     .pricing-item {
         padding: 0.5rem 0;
+        flex-direction: row;
+        align-items: flex-start;
     }
 
     .pricing-item-name {
         font-size: 14px;
+        margin-right: 0.5rem;
     }
 
     .pricing-item-price {
         font-size: 14px;
-        margin-left: 0.5rem;
+        flex-shrink: 0;
     }
 }
 
@@ -670,26 +680,68 @@ header a:hover {
 }
 
 .portfolio-desc {
-    display: block;
+    display: flex;
     flex: 1;
+}
+
+.portfolio-desc ul {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
 }
 
 .always-visible {
     display: block !important;
 }
 
+li.always-visible.pricing-item {
+    display: flex !important;
+}
+
 .collapsible-content {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
 }
 
 .portfolio-desc.expanded .collapsible-content {
     max-height: 1000px;
 }
 
+/* Push download button to bottom when expanded on desktop */
+@media (min-width: 768px) {
+    .collapsible-content > li:last-child {
+        margin-top: auto;
+    }
+}
+
 .portfolio-collapsible > .flex.justify-center {
     margin-top: auto;
+}
+
+/* Ensure button alignment on desktop only */
+@media (min-width: 768px) {
+    .catalog-item {
+        height: 100%;
+    }
+
+    .catalog-item .product-content {
+        height: 100%;
+    }
+
+    /* Ensure consistent spacing for download button when expanded */
+    .portfolio-collapsible.expanded .collapsible-content > li:last-child {
+        margin-top: auto;
+        padding-top: 1rem;
+    }
+
+    /* Ensure consistent spacing for toggle button */
+    .portfolio-collapsible > .flex.justify-center {
+        padding-top: 1rem;
+    }
 }
 
 .portfolio-toggle {
@@ -720,7 +772,6 @@ header a:hover {
     border-radius: 16px;
     padding: 32px;
     border: 1px solid transparent;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -730,7 +781,6 @@ header a:hover {
     background: #ffffff;
     border-color: #e8f5e9;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-    transform: translateY(-4px);
 }
 
 .adv-card h3 {
