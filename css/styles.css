@@ -297,7 +297,7 @@ header a:hover {
 
 .pricing-subtitle {
     text-align: center;
-    color: #666;
+    color: #333;
     font-size: 1.1rem;
     margin-bottom: 3rem;
     max-width: 800px;
@@ -390,26 +390,16 @@ header a:hover {
 
 .pricing-item-name {
     flex: 1;
-    font-size: 15px;
-    color: #374151;
+    color: #333;
+    font-size: 1rem;
     line-height: 1.4;
-    margin-right: 1rem;
-}
-
-.pricing-item-name small {
-    display: block;
-    font-size: 13px;
-    color: #6b7280;
-    line-height: 1.4;
-    margin-top: 0.25rem;
 }
 
 .pricing-item-price {
-    font-weight: 600;
     color: #154633;
+    font-size: 1rem;
+    font-weight: 300;
     white-space: nowrap;
-    font-size: 15px;
-    flex-shrink: 0;
 }
 
 .pricing-toggle {
@@ -963,6 +953,11 @@ li.always-visible.pricing-item {
     margin-bottom: 2rem;
 }
 
+#portfolio h3 {
+    color: #154633;
+    font-size: 1.5rem;
+}
+
 /* Product Slider */
 .product-slider {
     position: relative;
@@ -1067,7 +1062,7 @@ li.always-visible.pricing-item {
 }
 
 .product-description {
-    color: #666;
+    color: #333;
     line-height: 1.6;
     margin: 0;
 }
@@ -1082,7 +1077,7 @@ li.always-visible.pricing-item {
 }
 
 .product-specs li {
-    color: #666;
+    color: #333;
     font-size: 0.95rem;
 }
 
@@ -1444,36 +1439,23 @@ li.always-visible.pricing-item {
 }
 
 .faq-item {
-    background: white !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
     overflow: hidden;
-    border-bottom: none !important;
-    margin: 0 !important;
-}
-
-.faq-item:first-child {
-    border-top: none !important;
-}
-
-#faq-list {
-    border-radius: 0 !important;
-    box-shadow: none !important;
 }
 
 .faq-question {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding: 1.25rem 1.5rem;
+    padding: 1rem 1.5rem;
     color: #154633;
     font-size: 1.125rem;
     cursor: pointer;
     background: white;
     border: none;
     text-align: left;
-    min-height: 44px;
 }
 
 .faq-question:hover {
