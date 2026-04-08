@@ -792,6 +792,7 @@ li.always-visible.pricing-item {
 
 /* Mobile-specific portfolio fixes */
 @media (max-width: 768px) {
+
     /* Add spacing between description and download button on mobile */
     #portfolio .portfolio-download-btn {
         margin-top: 1.5rem;
@@ -1468,8 +1469,8 @@ li.always-visible.pricing-item {
 
 .faq-item {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px var(--shadow-color);
+    /* border-radius: 8px; */
+    /* box-shadow: 0 2px 8px var(--shadow-color); */
     overflow: hidden;
 }
 
@@ -1516,9 +1517,10 @@ li.always-visible.pricing-item {
     margin-bottom: 0;
 }
 
+/* 
 .faq-category .faq-item {
     margin-bottom: 1rem;
-}
+} */
 
 .faq-category .faq-item:last-child {
     margin-bottom: 0;
