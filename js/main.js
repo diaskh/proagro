@@ -46,7 +46,7 @@
         function initMobileMenu() {
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
-            
+
             if (mobileMenuBtn && mobileMenu) {
                 mobileMenuBtn.addEventListener('click', () => {
                     const isHidden = mobileMenu.classList.contains('hidden');
@@ -86,22 +86,24 @@
                         // Account for fixed header height
                         const headerHeight = document.getElementById('header').offsetHeight;
                         const targetPosition = target.offsetTop - headerHeight - 20;
-                        
+
                         window.scrollTo({
                             top: targetPosition,
                             behavior: 'smooth'
                         });
-                        
+
                         history.pushState(null, null, anchor.getAttribute('href'));
                     }
                 });
             });
         }
 
-        return { init: () => {
-            initMobileMenu();
-            initSmoothScroll();
-        }};
+        return {
+            init: () => {
+                initMobileMenu();
+                initSmoothScroll();
+            }
+        };
     })();
 
     // Модуль: Прокрутка
@@ -125,10 +127,12 @@
             }
         }
 
-        return { init: () => {
-            initHeroScroll();
-            initScrollToTop();
-        }};
+        return {
+            init: () => {
+                initHeroScroll();
+                initScrollToTop();
+            }
+        };
     })();
 
     // Модуль: Модальное окно
@@ -177,10 +181,10 @@
     const PricingHandler = (function () {
         function init() {
             const categories = document.querySelectorAll('.pricing-category');
-            
+
             categories.forEach(category => {
                 const header = category.querySelector('.pricing-category-header');
-                
+
                 header.addEventListener('click', () => {
                     // Close all other categories
                     categories.forEach(otherCategory => {
@@ -188,7 +192,7 @@
                             otherCategory.classList.remove('active');
                         }
                     });
-                    
+
                     // Toggle current category
                     category.classList.toggle('active');
                 });
@@ -312,10 +316,12 @@
             window.addEventListener('scroll', handleScroll);
         }
 
-        return { init: () => {
-            initFadeIn();
-            initMessengerAnimation();
-        }};
+        return {
+            init: () => {
+                initFadeIn();
+                initMessengerAnimation();
+            }
+        };
     })();
 
     // Модуль: Портфолио (Каталог дронов) и Прайс-лист
@@ -324,10 +330,10 @@
             // Handle both portfolio and pricing collapsible sections
             const portfolioBlocks = document.querySelectorAll('.portfolio-collapsible');
             const pricingBlocks = document.querySelectorAll('.pricing-collapsible');
-            
+
             // Helper function to check if we're on mobile
             const isMobile = () => window.innerWidth <= 768;
-            
+
             // Helper function to toggle a specific block
             const toggleBlock = (block, expanded, type = 'portfolio') => {
                 const desc = block.querySelector(type === 'portfolio' ? '.portfolio-desc' : '.pricing-desc');
@@ -422,7 +428,7 @@
 
                 const toggleExpansion = () => {
                     expanded = !expanded;
-                    
+
                     if (isMobile()) {
                         // On mobile: toggle only this block
                         toggleBlock(block, expanded, 'pricing');
@@ -435,7 +441,7 @@
                             }
                         });
                     }
-                    
+
                     block.setAttribute('data-expanded', expanded.toString());
                 };
 
@@ -588,7 +594,7 @@
                     plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
                 }
                 const emblaApi = EmblaCarousel(emblaNode, options, plugins);
-                
+
                 if (dotsContainer) {
                     dotsContainer.innerHTML = '';
                     const snapList = emblaApi.scrollSnapList();
@@ -635,7 +641,7 @@
             sliderNodes.forEach(emblaNode => {
                 const dotsContainer = emblaNode.querySelector('.advantages-dots');
                 if (!dotsContainer) return;
-                
+
                 // Clear dots if previously initialized
                 dotsContainer.innerHTML = '';
 
@@ -645,7 +651,7 @@
                     plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
                 }
                 const emblaApi = EmblaCarousel(emblaNode, options, plugins);
-                
+
                 const snapList = emblaApi.scrollSnapList();
                 const dots = [];
 
@@ -690,9 +696,9 @@
 
                 const options = { loop: true };
                 let plugins = [];
-                if (typeof EmblaCarouselAutoplay !== 'undefined') {
-                    plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
-                }
+                // if (typeof EmblaCarouselAutoplay !== 'undefined') {
+                //     plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
+                // }
                 const emblaApi = EmblaCarousel(emblaNode, options, plugins);
 
                 const snapList = emblaApi.scrollSnapList();
@@ -719,7 +725,7 @@
                         if (plugins.length > 0) plugins[0].reset();
                     });
                 }
-                
+
                 if (nextBtn) {
                     nextBtn.addEventListener('click', () => {
                         emblaApi.scrollNext();
@@ -821,7 +827,7 @@
             // Обработка отправки формы
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                
+
                 // Валидация телефона
                 if (phoneInput && phoneError && !validatePhone(phoneInput.value)) {
                     phoneError.classList.remove('hidden');
