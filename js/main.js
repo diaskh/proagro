@@ -676,6 +676,72 @@
         return { init };
     })();
 
+    // Модуль: Pilot Slider
+    const PilotSliderHandler = (function () {
+        function init() {
+            const sliderNodes = document.querySelectorAll('.pilot-slider.embla');
+            if (sliderNodes.length === 0) return;
+
+            sliderNodes.forEach(emblaNode => {
+                const dotsContainer = emblaNode.querySelector('.pilot-dots');
+                if (!dotsContainer) return;
+
+                dotsContainer.innerHTML = '';
+
+                const options = { loop: true };
+                let plugins = [];
+                if (typeof EmblaCarouselAutoplay !== 'undefined') {
+                    plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
+                }
+                const emblaApi = EmblaCarousel(emblaNode, options, plugins);
+
+                const snapList = emblaApi.scrollSnapList();
+                const dots = [];
+
+                snapList.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.classList.add('pilot-dot');
+                    if (index === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => {
+                        emblaApi.scrollTo(index);
+                        if (plugins.length > 0) plugins[0].reset();
+                    });
+                    dotsContainer.appendChild(dot);
+                    dots.push(dot);
+                });
+
+                const prevBtn = emblaNode.querySelector('.pilot-prev');
+                const nextBtn = emblaNode.querySelector('.pilot-next');
+
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        emblaApi.scrollPrev();
+                        if (plugins.length > 0) plugins[0].reset();
+                    });
+                }
+                
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        emblaApi.scrollNext();
+                        if (plugins.length > 0) plugins[0].reset();
+                    });
+                }
+
+                const onSelect = () => {
+                    const previous = emblaApi.previousScrollSnap();
+                    const selected = emblaApi.selectedScrollSnap();
+                    if (dots[previous]) dots[previous].classList.remove('active');
+                    if (dots[selected]) dots[selected].classList.add('active');
+                };
+
+                emblaApi.on('select', onSelect);
+                emblaApi.on('reInit', onSelect);
+            });
+        }
+
+        return { init };
+    })();
+
     // Модуль: Форма обратной связи
     const FormHandler = (function () {
         function init() {
@@ -820,6 +886,7 @@
         FAQHandler.init();
         SliderHandler.init();
         AdvantagesSliderHandler.init();
+        PilotSliderHandler.init();
         FormHandler.init();
         YearHandler.init();
         PricingHandler.init();

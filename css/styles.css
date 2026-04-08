@@ -1363,34 +1363,46 @@ li.always-visible.pricing-item {
     color: white !important;
 }
 
-/* Only the h3 and p directly in the green card (not inside the white sub-cards) should be white */
-#pilot-training .pilot-training-inner>h3,
-#pilot-training .pilot-training-inner>p {
-    color: white !important;
+/* Pilot Slider globally */
+.pilot-slider {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    display: block;
 }
 
-/* Text inside the white sub-cards should be dark */
-#pilot-training .advantages-grid h3,
-#pilot-training .advantages-slider h3 {
-    color: #154633 !important;
+.pilot-slide {
+    flex: 0 0 100%;
+    min-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-#pilot-training .advantages-grid p,
-#pilot-training .advantages-slider p {
-    color: #374151 !important;
+.pilot-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.pilot-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border: none;
+    padding: 0;
+}
+
+.pilot-dot.active {
+    background: rgba(255, 255, 255, 1);
 }
 
 #pilot-training .btn-download {
     font-size: 0.875rem;
     padding: 0.625rem 1.25rem;
-}
-
-/* Buttons inside white sub-cards need dark styling */
-#pilot-training .advantages-grid .btn-download,
-#pilot-training .advantages-slider .btn-download {
-    background: #154633;
-    color: white;
-    border-color: #154633;
 }
 
 @media (max-width: 640px) {
@@ -1498,7 +1510,6 @@ li.always-visible.pricing-item {
     font-weight: 600;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
-    border-bottom: 2px solid #95C11F;
 }
 
 .faq-category:last-child {
