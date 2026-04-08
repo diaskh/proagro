@@ -383,7 +383,7 @@ header a:hover {
 }
 
 .pricing-item:hover {
-    background-color: rgba(149, 193, 31, 0.05);
+    background: #f8f9fa;
 }
 
 .pricing-item-name {
@@ -427,13 +427,11 @@ header a:hover {
     }
 
     .pricing-item-name {
-        font-size: 14px;
         margin-right: 0.5rem;
         line-height: 1.5;
     }
 
     .pricing-item-price {
-        font-size: 14px;
         flex-shrink: 0;
     }
 }
@@ -1452,6 +1450,65 @@ li.always-visible.pricing-item {
 @media (max-width: 640px) {
     .pilot-training-inner {
         padding: 1.5rem 1rem;
+    }
+}
+
+/* Mobile-only: Fixed height slider to prevent layout jumps */
+@media (max-width: 768px) {
+    .pilot-slide {
+        height: 550px;
+        /* Fixed height to prevent layout jumps on mobile */
+    }
+
+    .pilot-slide>div {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Scrollable content area within each slide */
+    .pilot-slide .slide-content-wrapper {
+        flex: 1;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 8px;
+        /* Space for scrollbar */
+        scroll-padding: 1rem;
+        /* Smooth scroll offset */
+    }
+
+    /* Subtle scrollbar styling */
+    .pilot-slide .slide-content-wrapper::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .pilot-slide .slide-content-wrapper::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+
+    .pilot-slide .slide-content-wrapper::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    .pilot-slide .slide-content-wrapper::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    /* Fixed button area at the bottom */
+    .pilot-slide .slide-buttons {
+        flex-shrink: 0;
+        padding-top: 1rem;
+        margin-top: auto;
+    }
+}
+
+/* Smaller mobile devices - adjust height if needed */
+@media (max-width: 480px) {
+    .pilot-slide {
+        height: 600px;
+        /* Slightly taller for smaller screens with more vertical space */
     }
 }
 
