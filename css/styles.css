@@ -791,6 +791,29 @@ li.always-visible.pricing-item {
     gap: 0.75rem;
 }
 
+/* Mobile-specific portfolio fixes */
+@media (max-width: 768px) {
+    /* Add spacing between description and download button on mobile */
+    #portfolio .portfolio-download-btn {
+        margin-top: 1.5rem;
+    }
+
+    /* Add spacing between download button and toggle button on mobile */
+    #portfolio .portfolio-toggle {
+        margin-top: 1.5rem;
+    }
+
+    /* Ensure proper text visibility and prevent button overlap */
+    #portfolio .portfolio-desc {
+        margin-bottom: 0.5rem;
+    }
+
+    /* Center-align headings on mobile as well */
+    #portfolio .product-content h3 {
+        text-align: center;
+    }
+}
+
 /* Advantage Cards (v2 style) */
 .adv-card {
     background: #ffffff;
