@@ -375,7 +375,7 @@ header a:hover {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 0.75rem 0;
+    padding: 1.5rem 0;
     border-bottom: 1px solid #e5e7eb;
     flex-wrap: nowrap;
     width: 100%;
@@ -421,7 +421,7 @@ header a:hover {
 /* Mobile - keep prices on right */
 @media (max-width: 640px) {
     .pricing-item {
-        padding: 0.5rem 0;
+        padding: 1rem 0;
         flex-direction: row;
         align-items: flex-start;
     }
@@ -429,6 +429,7 @@ header a:hover {
     .pricing-item-name {
         font-size: 14px;
         margin-right: 0.5rem;
+        line-height: 1.5;
     }
 
     .pricing-item-price {
