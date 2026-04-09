@@ -1459,9 +1459,33 @@ li.always-visible.pricing-item {
 
 /* Mobile-only: Fixed height slider to prevent layout jumps */
 @media (max-width: 768px) {
+    #pilot-training {
+        padding-top: 15px !important;
+        padding-bottom: 15px !important;
+    }
+
+    #pilot-training h2 {
+        margin-bottom: 1rem !important;
+    }
+
+    .pilot-training-inner {
+        padding: 1rem !important;
+    }
+
     .pilot-slide {
-        height: 550px;
+        height: 350px !important;
         /* Fixed height to prevent layout jumps on mobile */
+    }
+
+    .pilot-slide h3 {
+        margin-bottom: 0.5rem !important;
+        font-size: 1.25rem !important;
+    }
+
+    .pilot-slide p,
+    .pilot-slide ul {
+        margin-bottom: 0.5rem !important;
+        font-size: 0.875rem !important;
     }
 
     .pilot-slide>div {
@@ -1503,7 +1527,7 @@ li.always-visible.pricing-item {
     /* Fixed button area at the bottom */
     .pilot-slide .slide-buttons {
         flex-shrink: 0;
-        padding-top: 1rem;
+        padding-top: 0.5rem;
         margin-top: auto;
     }
 }
@@ -1511,7 +1535,7 @@ li.always-visible.pricing-item {
 /* Smaller mobile devices - adjust height if needed */
 @media (max-width: 480px) {
     .pilot-slide {
-        height: 600px;
+        height: 350px !important;
         /* Slightly taller for smaller screens with more vertical space */
     }
 }
