@@ -637,7 +637,7 @@ header a:hover {
 
 .product-image-slider .embla__slide img {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 16/9;
     object-fit: cover;
     display: block;
 }
@@ -930,7 +930,7 @@ li.always-visible.pricing-item {
     }
 
     #sliders h2 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     .slide-img {
@@ -1438,6 +1438,7 @@ li.always-visible.pricing-item {
     #pilot-training .btn-download {
         margin-right: 0;
         margin-bottom: 10px;
+        margin-top: 10px;
         justify-content: center;
     }
 
@@ -1465,7 +1466,7 @@ li.always-visible.pricing-item {
     }
 
     #pilot-training h2 {
-        margin-bottom: 1rem !important;
+        margin-bottom: 2rem !important;
     }
 
     .pilot-training-inner {
@@ -1479,13 +1480,13 @@ li.always-visible.pricing-item {
 
     .pilot-slide h3 {
         margin-bottom: 0.5rem !important;
-        font-size: 1.25rem !important;
+        /* font-size: 1.25rem !important; */
     }
 
     .pilot-slide p,
     .pilot-slide ul {
         margin-bottom: 0.5rem !important;
-        font-size: 0.875rem !important;
+        /* font-size: 0.875rem !important; */
     }
 
     .pilot-slide>div {
@@ -1535,7 +1536,7 @@ li.always-visible.pricing-item {
 /* Smaller mobile devices - adjust height if needed */
 @media (max-width: 480px) {
     .pilot-slide {
-        height: 350px !important;
+        height: 450px !important;
         /* Slightly taller for smaller screens with more vertical space */
     }
 }
@@ -1806,6 +1807,7 @@ footer {
         font-size: 1rem;
     }
 
+    #pilot-training h2,
     #about_service h2,
     #advantages h2,
     #portfolio h2,
@@ -6174,7 +6176,7 @@ button {
     }
 
     .md\:text-4xl {
-        font-size: 2.25rem;
+        font-size: 2rem;
         line-height: 2.5rem
     }
 
