@@ -637,7 +637,7 @@ header a:hover {
 
 .product-image-slider .embla__slide img {
     width: 100%;
-    aspect-ratio: 16/9;
+    aspect-ratio: 16/10;
     object-fit: cover;
     display: block;
 }
@@ -1403,6 +1403,14 @@ li.always-visible.pricing-item {
     justify-content: center;
     align-items: center;
     gap: 8px;
+}
+
+/* Desktop spacing for dots container */
+@media (min-width: 768px) {
+    .pilot-slider>div:last-child {
+        margin-top: 2rem !important;
+        margin-bottom: 0rem !important;
+    }
 }
 
 .pilot-dot {
