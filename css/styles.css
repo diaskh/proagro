@@ -1375,11 +1375,27 @@ li.always-visible.pricing-item {
     display: block;
 }
 
+/* Desktop: Add gap between slides */
+@media (min-width: 1024px) {
+    .pilot-slider .embla__container {
+        gap: 1.5rem;
+    }
+}
+
 .pilot-slide {
     flex: 0 0 100%;
     min-width: 100%;
     width: 100%;
     box-sizing: border-box;
+}
+
+/* Desktop: Show 2-3 slides with 4th partially visible */
+@media (min-width: 1024px) {
+    .pilot-slide {
+        flex: 0 0 calc(33.333% - 1rem);
+        min-width: calc(33.333% - 1rem);
+        width: calc(33.333% - 1rem);
+    }
 }
 
 .pilot-dots {
@@ -1549,21 +1565,51 @@ li.always-visible.pricing-item {
 
 /* Desktop Layout for Pilot Training - Vertical Centering & Button Stability */
 @media (min-width: 1024px) {
+    #pilot-training .pilot-slide {
+        height: 500px;
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
     #pilot-training .pilot-slide>div {
         display: flex;
         flex-direction: column;
+        height: 100%;
     }
 
     #pilot-training .slide-content-wrapper {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-right: 8px;
+    }
+
+    /* Scrollbar styling for desktop */
+    #pilot-training .slide-content-wrapper::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    #pilot-training .slide-content-wrapper::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+
+    #pilot-training .slide-content-wrapper::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 3px;
+    }
+
+    #pilot-training .slide-content-wrapper::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.5);
     }
 
     #pilot-training .slide-buttons {
         margin-top: auto;
         flex-shrink: 0;
+        padding-top: 1rem;
     }
 }
 

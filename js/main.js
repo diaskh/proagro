@@ -694,7 +694,11 @@
 
                 dotsContainer.innerHTML = '';
 
-                const options = { loop: true };
+                const options = {
+                    loop: true,
+                    align: 'start',
+                    slidesToScroll: 1
+                };
                 let plugins = [];
                 // if (typeof EmblaCarouselAutoplay !== 'undefined') {
                 //     plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
