@@ -211,7 +211,8 @@ header a:hover {
 
 #about_service .bg-white {
     background: white;
-    border-radius: 8px;
+    border-radius: 0px !important;
+    /* border-radius: .375rem; */
     box-shadow: 0 2px 8px var(--shadow-color);
 }
 
@@ -795,8 +796,9 @@ li.always-visible.pricing-item {
 @media (max-width: 768px) {
 
     /* Add spacing between description and download button on mobile */
-    #portfolio .portfolio-download-btn {
-        margin-top: 1.5rem;
+    #portfolio .btn-download {
+        margin-top: 1.4rem;
+        font-size: .75rem !important;
     }
 
     /* Add spacing between download button and toggle button on mobile */
@@ -818,7 +820,7 @@ li.always-visible.pricing-item {
 /* Advantage Cards (v2 style) */
 .adv-card {
     background: #ffffff;
-    border-radius: 8px;
+    border-radius: 0px !important;
     padding: 32px;
     box-shadow: 0 2px 8px var(--shadow-color);
     height: 100%;
