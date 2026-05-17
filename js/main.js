@@ -474,7 +474,19 @@
 
             sliders.forEach(sliderNode => {
                 const dotsContainer = sliderNode.querySelector('.catalog-image-dots');
-                const emblaApi = EmblaCarousel(sliderNode, { loop: true });
+                const emblaApi = EmblaCarousel(sliderNode, { loop: true, draggable: false });
+
+                // Add click handler to advance to next slide on desktop
+                const emblaContainer = sliderNode.querySelector('.embla__container');
+                if (emblaContainer && window.innerWidth >= 768) {
+                    emblaContainer.style.cursor = 'pointer';
+                    emblaContainer.addEventListener('click', (e) => {
+                        // Don't advance if clicking on a dot
+                        if (!e.target.closest('.catalog-image-dots')) {
+                            emblaApi.scrollNext();
+                        }
+                    });
+                }
 
                 if (dotsContainer) {
                     dotsContainer.innerHTML = '';
