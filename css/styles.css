@@ -620,7 +620,7 @@ header a:hover {
 
 .catalog-item {
     background: white;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 8px var(--shadow-color);
     display: flex;
