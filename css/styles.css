@@ -818,6 +818,10 @@ li.always-visible.pricing-item {
     #portfolio .product-content h3 {
         text-align: center;
     }
+
+    #portfolio .btn-download {
+        font-size: 0.75rem !important;
+    }
 }
 
 /* Advantage Cards (v2 style) */
