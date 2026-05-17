@@ -1721,7 +1721,7 @@ li.always-visible.pricing-item {
 /* Footer */
 footer {
     background: var(--primary-green);
-    padding: 1rem;
+    padding: 0 1rem 1rem 1rem;
     color: var(--text-light);
 
 }
