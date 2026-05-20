@@ -694,71 +694,90 @@
         return { init };
     })();
 
-    // Модуль: Pilot Slider
-    const PilotSliderHandler = (function () {
+    // Модуль: Pilot Training Accordion
+    const PilotTrainingHandler = (function () {
+        let currentlyExpandedItem = null;
+
         function init() {
-            const sliderNodes = document.querySelectorAll('.pilot-slider.embla');
-            if (sliderNodes.length === 0) return;
+            const accordionItems = document.querySelectorAll('.pilot-accordion-item');
+            if (accordionItems.length === 0) return;
 
-            sliderNodes.forEach(emblaNode => {
-                const dotsContainer = emblaNode.querySelector('.pilot-dots');
-                if (!dotsContainer) return;
+            accordionItems.forEach((item) => {
+                const cardId = item.getAttribute('data-card-id');
+                const trigger = item.querySelector('.pilot-accordion-trigger');
+                const content = item.querySelector('.pilot-accordion-content');
+                let expanded = false;
 
-                dotsContainer.innerHTML = '';
+                // Open first card by default
+                if (cardId === 'rules') {
+                    expanded = true;
+                    currentlyExpandedItem = item;
+                    toggleItem(item, content, expanded);
+                    item.classList.add('active');
+                }
 
-                const options = {
-                    loop: true,
-                    align: 'start',
-                    slidesToScroll: 1
+                const toggleExpansion = () => {
+                    if (expanded) {
+                        // Collapse current item
+                        expanded = false;
+                        toggleItem(item, content, expanded);
+                        item.classList.remove('active');
+                        currentlyExpandedItem = null;
+                    } else {
+                        // Close previously open item
+                        if (currentlyExpandedItem && currentlyExpandedItem !== item) {
+                            const prevContent = currentlyExpandedItem.querySelector('.pilot-accordion-content');
+                            toggleItem(currentlyExpandedItem, prevContent, false);
+                            currentlyExpandedItem.classList.remove('active');
+                        }
+                        // Expand current item
+                        expanded = true;
+                        toggleItem(item, content, expanded);
+                        item.classList.add('active');
+                        currentlyExpandedItem = item;
+                    }
                 };
-                let plugins = [];
-                // if (typeof EmblaCarouselAutoplay !== 'undefined') {
-                //     plugins = [EmblaCarouselAutoplay({ delay: 3000, stopOnInteraction: false })];
-                // }
-                const emblaApi = EmblaCarousel(emblaNode, options, plugins);
 
-                const snapList = emblaApi.scrollSnapList();
-                const dots = [];
+                // Prevent download link from toggling
+                const downloadLink = item.querySelector('.pilot-download-link');
+                if (downloadLink) {
+                    downloadLink.addEventListener('click', (e) => e.stopPropagation());
+                }
 
-                snapList.forEach((_, index) => {
-                    const dot = document.createElement('div');
-                    dot.classList.add('pilot-dot');
-                    if (index === 0) dot.classList.add('active');
-                    dot.addEventListener('click', () => {
-                        emblaApi.scrollTo(index);
-                        if (plugins.length > 0) plugins[0].reset();
-                    });
-                    dotsContainer.appendChild(dot);
-                    dots.push(dot);
-                });
-
-                const prevBtn = emblaNode.querySelector('.pilot-prev');
-                const nextBtn = emblaNode.querySelector('.pilot-next');
-
-                if (prevBtn) {
-                    prevBtn.addEventListener('click', () => {
-                        emblaApi.scrollPrev();
-                        if (plugins.length > 0) plugins[0].reset();
+                // Click event on trigger
+                if (trigger) {
+                    trigger.addEventListener('click', (e) => {
+                        if (e.target.closest('.pilot-download-link')) return;
+                        e.preventDefault();
+                        toggleExpansion();
                     });
                 }
 
-                if (nextBtn) {
-                    nextBtn.addEventListener('click', () => {
-                        emblaApi.scrollNext();
-                        if (plugins.length > 0) plugins[0].reset();
+                // Keyboard navigation
+                if (trigger) {
+                    trigger.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            toggleExpansion();
+                        }
                     });
                 }
-
-                const onSelect = () => {
-                    const previous = emblaApi.previousScrollSnap();
-                    const selected = emblaApi.selectedScrollSnap();
-                    if (dots[previous]) dots[previous].classList.remove('active');
-                    if (dots[selected]) dots[selected].classList.add('active');
-                };
-
-                emblaApi.on('select', onSelect);
-                emblaApi.on('reInit', onSelect);
             });
+        }
+
+        function toggleItem(item, content, expanded) {
+            if (expanded) {
+                // Calculate and set max-height for smooth animation
+                content.style.maxHeight = 'none';
+                const height = content.scrollHeight;
+                content.style.maxHeight = '0';
+                content.offsetHeight; // Force reflow
+                requestAnimationFrame(() => {
+                    content.style.maxHeight = height + 'px';
+                });
+            } else {
+                content.style.maxHeight = '0';
+            }
         }
 
         return { init };
@@ -908,7 +927,7 @@
         FAQHandler.init();
         SliderHandler.init();
         AdvantagesSliderHandler.init();
-        PilotSliderHandler.init();
+        PilotTrainingHandler.init();
         FormHandler.init();
         YearHandler.init();
         PricingHandler.init();
