@@ -1342,7 +1342,7 @@ li.always-visible.pricing-item {
 .pilot-accordion-item {
     background: white;
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
+    border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
@@ -1470,9 +1470,6 @@ li.always-visible.pricing-item {
         margin-left: 0.5rem;
     }
 
-    .pilot-accordion-item.active .pilot-accordion-content {
-        padding-top: 10px;
-    }
 }
 
 /* Accordion Content */
@@ -1480,6 +1477,7 @@ li.always-visible.pricing-item {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-top: 10px;
 }
 
 .pilot-accordion-item.active .pilot-accordion-content {
