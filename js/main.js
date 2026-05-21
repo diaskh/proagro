@@ -109,15 +109,24 @@
     // Модуль: Прокрутка
     const ScrollHandler = (function () {
         function initHeroScroll() {
-            if (window.location.hash) {
-                history.replaceState(null, null, window.location.pathname);
+            // Check if this is a page refresh or initial visit
+            const isRefresh = sessionStorage.getItem('pageVisited');
+
+            if (!isRefresh) {
+                // First visit - scroll to top and mark as visited
+                sessionStorage.setItem('pageVisited', 'true');
+
+                if (window.location.hash) {
+                    history.replaceState(null, null, window.location.pathname);
+                }
+                const hero = document.getElementById('hero');
+                if (hero) {
+                    hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
-            const hero = document.getElementById('hero');
-            if (hero) {
-                hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
+            // On refresh, do nothing - browser will restore scroll position
         }
 
         function initScrollToTop() {
