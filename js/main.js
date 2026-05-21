@@ -415,8 +415,8 @@
 
                 // Add click event to the whole collapsible block
                 block.addEventListener('click', (e) => {
-                    // Don't toggle if clicking the download button or its anchor
-                    if (e.target.closest('.portfolio-download-btn')) return;
+                    // Don't toggle if clicking the download button, its anchor, or the image slider
+                    if (e.target.closest('.portfolio-download-btn') || e.target.closest('.product-image-slider')) return;
                     e.preventDefault();
                     toggleExpansion();
                 });
