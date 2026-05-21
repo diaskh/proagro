@@ -1469,6 +1469,10 @@ li.always-visible.pricing-item {
     .pilot-accordion-arrow {
         margin-left: 0.5rem;
     }
+
+    .pilot-accordion-item.active .pilot-accordion-content {
+        padding-top: 10px;
+    }
 }
 
 /* Accordion Content */
