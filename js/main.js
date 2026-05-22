@@ -717,13 +717,7 @@
                 const content = item.querySelector('.pilot-accordion-content');
                 let expanded = false;
 
-                // Open first card by default
-                if (cardId === 'rules') {
-                    expanded = true;
-                    currentlyExpandedItem = item;
-                    toggleItem(item, content, expanded);
-                    item.classList.add('active');
-                }
+
 
                 const toggleExpansion = () => {
                     if (expanded) {
@@ -758,6 +752,14 @@
                     trigger.addEventListener('click', (e) => {
                         if (e.target.closest('.pilot-download-link')) return;
                         e.preventDefault();
+                        toggleExpansion();
+                    });
+                }
+
+                // Click event on the expanded content area to close it
+                if (content) {
+                    content.addEventListener('click', (e) => {
+                        if (e.target.closest('.pilot-download-link')) return;
                         toggleExpansion();
                     });
                 }
