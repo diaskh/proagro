@@ -1558,7 +1558,7 @@ li.always-visible.pricing-item {
 /* FAQ Section */
 #faq {
     background: var(--background-light);
-    padding: 2rem 1rem;
+    padding: 1rem 1rem;
 }
 
 #faq h2 {
